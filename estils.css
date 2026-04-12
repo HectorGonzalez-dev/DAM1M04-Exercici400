@@ -37,7 +37,6 @@ h1 {
 
 .casella{
     align-items: center;
-    border-radius: 50%;
     display: flex;
     flex-wrap: wrap;
     height: var(--mida);
@@ -45,24 +44,15 @@ h1 {
     position: absolute;
     user-select: none;
     width: var(--mida);
+    transition: top 0.3s ease, left 0.3s ease;
 }
 
 .casella:hover{
-    background:#d6dee0;
     cursor: pointer;
 }
 
-#fitxaBlava{
-    background:#00b3ff;
-    border-radius: 50%;
-    height: var(--mida);
-    left:0;
-    opacity: 0.5;
-    overflow: hidden;
-    position:absolute;
-    top:0;
-    transition: transform 350ms ease;
-    width: var(--mida);
+.vacia:hover {
+    cursor: default;
 }
 
 .controls{

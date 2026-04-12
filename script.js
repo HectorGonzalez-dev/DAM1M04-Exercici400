@@ -3,6 +3,7 @@
 const midaCasella = 100
 const numFiles = 3
 const numColumnes = 3
+const ultimaCasella = numFiles * numColumnes
 
 const solucion = [
     [1, 2, 3],
@@ -40,17 +41,22 @@ function init() {
 
             const refCasella = document.createElement("div")
             refCasella.classList.add("casella")
-            refCasella.addEventListener("click", () => mouFitxa(fila, columna))
 
-            const index = fila * numColumnes + columna
-            const ultimaCasella = numFiles * numColumnes - 1
+            let index = fila * numColumnes + columna + 1
+            
+            // Si es la última casilla, su índice será 0
+            if (index === ultimaCasella) {
+                index = 0
+                refCasella.id = `casella-${index}`
+                refCasella.classList.add("vacia")
+            } else {
+                refCasella.addEventListener("click", () => mouFitxa(index))
+                refCasella.id = `casella-${index}`
 
-            // SOLO si NO es la última casilla, añadimos imagen
-            if (index !== ultimaCasella) {
                 const img = document.createElement("img")
 
-                img.src = `img/fosil${index + 1}.png`
-                img.alt = `fosil${index + 1}`
+                img.src = `img/fosil${index}.png`
+                img.alt = `fosil${index}`
                 img.style.width = "100%"
                 img.style.height = "100%"
 
@@ -64,13 +70,6 @@ function init() {
         }
     }
 
-    // Crear la fitxa blava que es mourà pel tauler
-    var refFitxa = document.createElement("div")
-    refFitxa.setAttribute("id", "fitxaBlava")
-
-    // Afegir la fitxa blava al tauler
-    refTauler.appendChild(refFitxa)
-
     // Afegir event al botó de reset
     const refReset = document.getElementById("btnReinici")
     refReset.addEventListener("click", reinicia)
@@ -79,6 +78,15 @@ function init() {
 }
 
 function comprobarAdyacentes(matriz, fila, columna) {
+
+    console.log("Antes");
+
+    console.log(posicioActual[0]);
+    console.log(posicioActual[1]);
+    console.log(posicioActual[2]);
+
+    console.log(`Analizando ${fila} ${columna}`);
+
     for (const direction of directions) {
 
         const nuevaFila = fila + direction[0];
@@ -95,32 +103,52 @@ function comprobarAdyacentes(matriz, fila, columna) {
     return null;
 }
 
-function mouFitxa(fila, columna) {
+function mouFitxa(index) {
+
+    let fila, columna;
+
+    // Buscar la ficha en posicioActual
+    for (let i = 0; i < posicioActual.length; i++) {
+        for (let j = 0; j < posicioActual[i].length; j++) {
+            if (posicioActual[i][j] === index) {
+                fila = i;
+                columna = j;
+            }
+        }
+    }
 
     let vacio = comprobarAdyacentes(posicioActual, fila, columna);
 
     if (vacio != null) {
-        // Mostrar canvis a la web
-        actualitzaDOM()
+
+        posicioActual[vacio[0]][vacio[1]] = posicioActual[fila][columna];
+        posicioActual[fila][columna] = 0;
+
+        actualitzaDOM([fila, columna], vacio);
     }
-    
+
 }
 
-function actualitzaDOM() {
+function actualitzaDOM(casilla, vacio) {
 
-    // Calcular la posició en píxels a partir de la fila i columna
-    const posicioX = posicioActual.columna * midaCasella
-    const posicioY = posicioActual.fila * midaCasella
+    console.log("Despues");
 
-    // Aplicar la transformació CSS per moure la fitxa
-    const refFitxa = document.getElementById("fitxaBlava")
-    refFitxa.style.transform = `translate(${posicioX}px, ${posicioY}px)`
-    
-    // Actualitzar informació de la posició
-    const refInfo = document.getElementById("info")
-    refInfo.textContent = `Fila: ${posicioActual.fila}, Columna: ${posicioActual.columna}`
+    console.log(posicioActual[0]);
+    console.log(posicioActual[1]);
+    console.log(posicioActual[2]);
+
+    const refOrigen = document.getElementById(`casella-${posicioActual[vacio[0]][vacio[1]]}`);
+    const refDesti = document.getElementById(`casella-${posicioActual[casilla[0]][casilla[1]]}`);
+
+    refOrigen.style.left = `${vacio[1] * midaCasella}px`;
+    refOrigen.style.top = `${vacio[0] * midaCasella}px`;
+
+    refDesti.style.left = `${casilla[1] * midaCasella}px`;
+    refDesti.style.top = `${casilla[0] * midaCasella}px`;
+
 }
 
+// No editar aún
 function reinicia() {
-    mouFitxa(1, 1)
+    
 }
