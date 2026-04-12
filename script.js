@@ -65,8 +65,7 @@ function init() {
                 refCasella.appendChild(img)
             }
 
-            refCasella.style.left = `${columna * midaCasella}px`
-            refCasella.style.top = `${fila * midaCasella}px`
+            refCasella.style.transform = `translate(${columna * midaCasella}px, ${fila * midaCasella}px)`
             refTauler.appendChild(refCasella)
         
         }
@@ -130,11 +129,8 @@ function actualitzaDOM(casilla, vacio) {
     const refOrigen = document.getElementById(`casella-${posicioActual[vacio[0]][vacio[1]]}`);
     const refDesti = document.getElementById(`casella-${posicioActual[casilla[0]][casilla[1]]}`);
 
-    refOrigen.style.left = `${vacio[1] * midaCasella}px`;
-    refOrigen.style.top = `${vacio[0] * midaCasella}px`;
-
-    refDesti.style.left = `${casilla[1] * midaCasella}px`;
-    refDesti.style.top = `${casilla[0] * midaCasella}px`;
+    refOrigen.style.transform = `translate(${vacio[1] * midaCasella}px, ${vacio[0] * midaCasella}px)`;
+    refDesti.style.transform = `translate(${casilla[1] * midaCasella}px, ${casilla[0] * midaCasella}px)`;
 
 }
 

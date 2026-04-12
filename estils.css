@@ -31,7 +31,7 @@ h1 {
     border: 1px solid #111827;
     height: calc(var(--mida) * var(--files));
     overflow: hidden;
-    position:relative;
+    position: relative;
     width: calc(var(--mida) * var(--columnes));
 }
 
@@ -44,7 +44,7 @@ h1 {
     position: absolute;
     user-select: none;
     width: var(--mida);
-    transition: top 0.3s ease, left 0.3s ease;
+    transition: transform 0.3s ease;
 }
 
 .casella:hover{
