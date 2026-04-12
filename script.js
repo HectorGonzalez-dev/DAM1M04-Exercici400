@@ -148,7 +148,47 @@ function actualitzaDOM(casilla, vacio) {
 
 }
 
-// No editar aún
 function reinicia() {
-    
+
+    // Buscar vacio actual
+    let fila, columna;
+
+    for (let i = 0; i < posicioActual.length; i++) {
+        for (let j = 0; j < posicioActual[i].length; j++) {
+            if (posicioActual[i][j] === 0) {
+                fila = i;
+                columna = j;
+            }
+        }
+    }
+
+    for (let k = 0; k < 30; k++) {
+
+        // Obtener movimientos válidos
+        let movs = [];
+
+        for (const d of directions) {
+            const nf = fila + d[0];
+            const nc = columna + d[1];
+
+            if (nf >= 0 && nf < numFiles && nc >= 0 && nc < numColumnes) {
+                movs.push([nf, nc]);
+            }
+        }
+
+        // Elegir uno aleatorio
+        const rand = Math.floor(Math.random() * movs.length);
+        const [nf, nc] = movs[rand];
+
+        // Intercambiar con el hueco
+        posicioActual[fila][columna] = posicioActual[nf][nc];
+        posicioActual[nf][nc] = 0;
+
+        // Actualizar DOM
+        actualitzaDOM([nf, nc], [fila, columna]);
+
+        // Actualizar posición del hueco
+        fila = nf;
+        columna = nc;
+    }
 }
