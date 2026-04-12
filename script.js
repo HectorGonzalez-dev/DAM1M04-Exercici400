@@ -24,6 +24,8 @@ let posicioActual = [
     [7, 8, 0]
 ];
 
+let movimientos = 0;
+
 function init() {
 
     // Definir els valors de les variables CSS
@@ -79,14 +81,6 @@ function init() {
 
 function comprobarAdyacentes(matriz, fila, columna) {
 
-    console.log("Antes");
-
-    console.log(posicioActual[0]);
-    console.log(posicioActual[1]);
-    console.log(posicioActual[2]);
-
-    console.log(`Analizando ${fila} ${columna}`);
-
     for (const direction of directions) {
 
         const nuevaFila = fila + direction[0];
@@ -123,7 +117,7 @@ function mouFitxa(index) {
 
         posicioActual[vacio[0]][vacio[1]] = posicioActual[fila][columna];
         posicioActual[fila][columna] = 0;
-
+        movimientos++;
         actualitzaDOM([fila, columna], vacio);
     }
 
@@ -131,11 +125,7 @@ function mouFitxa(index) {
 
 function actualitzaDOM(casilla, vacio) {
 
-    console.log("Despues");
-
-    console.log(posicioActual[0]);
-    console.log(posicioActual[1]);
-    console.log(posicioActual[2]);
+    document.getElementById("info").textContent = "Movimientos: " + movimientos;
 
     const refOrigen = document.getElementById(`casella-${posicioActual[vacio[0]][vacio[1]]}`);
     const refDesti = document.getElementById(`casella-${posicioActual[casilla[0]][casilla[1]]}`);
@@ -149,6 +139,8 @@ function actualitzaDOM(casilla, vacio) {
 }
 
 function reinicia() {
+
+    movimientos = 0;
 
     // Buscar vacio actual
     let fila, columna;
