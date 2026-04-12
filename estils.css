@@ -1,0 +1,83 @@
+/* Aquests valors es defineixen al JavaScript */
+:root{
+    --mida: 0;
+    --columnes: 0;
+    --files: 0;
+}
+
+* { 
+    box-sizing: border-box; 
+}
+
+body{
+    align-items: center;
+    background:#f6f7fb;
+    color:#111827;
+    display: flex;
+    flex-direction: column;
+    font-family:"Open Sans", sans-serif;
+    height: 100vh;
+    justify-content: center;
+    padding: 10px;
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+#tauler{
+    background:white;
+    border: 1px solid #111827;
+    height: calc(var(--mida) * var(--files));
+    overflow: hidden;
+    position:relative;
+    width: calc(var(--mida) * var(--columnes));
+}
+
+.casella{
+    align-items: center;
+    border-radius: 50%;
+    display: flex;
+    flex-wrap: wrap;
+    height: var(--mida);
+    justify-content: center;
+    position: absolute;
+    user-select: none;
+    width: var(--mida);
+}
+
+.casella:hover{
+    background:#d6dee0;
+    cursor: pointer;
+}
+
+#fitxaBlava{
+    background:#00b3ff;
+    border-radius: 50%;
+    height: var(--mida);
+    left:0;
+    opacity: 0.5;
+    overflow: hidden;
+    position:absolute;
+    top:0;
+    transition: transform 350ms ease;
+    width: var(--mida);
+}
+
+.controls{
+    align-items:center;
+    display:flex;
+    gap:12px;
+    margin-top:15px;
+}
+
+button{
+    background:#111827;
+    border:0;
+    border-radius:10px;
+    color:white;
+    cursor:pointer;
+    font-weight:800;
+    padding:10px 14px;
+}
