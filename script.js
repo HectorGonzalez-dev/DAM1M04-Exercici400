@@ -180,7 +180,7 @@ function reinicia() {
         }
     }
 
-    for (let k = 0; k < 5; k++) {
+    for (let k = 0; k < 40; k++) {
 
         // Obtener movimientos válidos
         let movs = [];
