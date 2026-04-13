@@ -4,6 +4,7 @@ const midaCasella = 100
 const numFiles = 3
 const numColumnes = 3
 const ultimaCasella = numFiles * numColumnes
+let gameFinished = false;
 
 const solucion = [
     [1, 2, 3],
@@ -96,8 +97,25 @@ function comprobarAdyacentes(matriz, fila, columna) {
     return null;
 }
 
-function mouFitxa(index) {
+function matricesIguales(a, b) {
+    if (a.length !== b.length) return false;
 
+    for (let i = 0; i < a.length; i++) {
+        if (a[i].length !== b[i].length) return false;
+
+        for (let j = 0; j < a[i].length; j++) {
+            if (a[i][j] !== b[i][j]) {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+
+function mouFitxa(index) {
+    if (gameFinished) return;
     let fila, columna;
 
     // Buscar la ficha en posicioActual
@@ -117,6 +135,14 @@ function mouFitxa(index) {
         posicioActual[vacio[0]][vacio[1]] = posicioActual[fila][columna];
         posicioActual[fila][columna] = 0;
         movimientos++;
+
+        if (matricesIguales(posicioActual, solucion)) {
+            const refwin = document.getElementById("winScreen")
+            document.getElementById("movements").textContent = "Acabaste en " + movimientos + " movimientos";
+            refwin.classList.add("win")
+            gameFinished = true
+        }
+
         actualitzaDOM([fila, columna], vacio);
     }
 
@@ -135,8 +161,12 @@ function actualitzaDOM(casilla, vacio) {
 }
 
 function reinicia() {
-
+    gameFinished = false;
     movimientos = 0;
+    const refwin = document.getElementById("winScreen")
+    if (refwin.classList.contains("win")) {
+        refwin.classList.remove("win");
+    }
 
     // Buscar vacio actual
     let fila, columna;
@@ -150,7 +180,7 @@ function reinicia() {
         }
     }
 
-    for (let k = 0; k < 30; k++) {
+    for (let k = 0; k < 5; k++) {
 
         // Obtener movimientos válidos
         let movs = [];
